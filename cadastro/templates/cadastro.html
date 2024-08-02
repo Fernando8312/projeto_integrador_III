@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'cadastro/css/cadastro.css' %}">
+    <link rel="stylesheet" href="{% static 'dataTables/css/dataTables.dataTables.css' %}" />
+    <link rel="stylesheet" href="{% static 'sweetAlert/css/sweetalert2.min.css' %}" />
+{% endblock %}
+
+{% block 'dashboard' %}
+
+<div id="container">
+    <div class="tab-buttons">
+        <button class="tab-btn active" content-id="home">
+            Cadastrar Usuários
+        </button>
+        <button class="tab-btn" content-id="pesquisa" id="botao_pesquisar">
+            Pesquisar
+        </button>
+    </div>
+    <div class="tab-contents">
+        <div class="content show" id="home">
+            <form action="{% url 'cadastro' %}" method="POST" id="form_cadastrar">{% csrf_token %}
+                Informações do Usuário:<br>
+                <hr style="margin:2px; background-color:gray;">
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" class="form-control" placeholder="Nome" name="nome" value="{{nome}}" autofocus required maxlength="255">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="cpf">CPF:</label>
+                        <input type="text" id="cpf" class="form-control" placeholder="___.___.___-__" name="cpf" value="{{cpf}}" required maxlength="11">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="rg">RG:</label>:
+                        <input type="text" id="rg" class="form-control" placeholder="__.___.___-_" name="rg" value="{{rg}}" maxlength="9">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" class="form-control" placeholder="nome@email.com" name="email" value="{{email}}" maxlength="100">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="telefone1">Telefone:</label>
+                        <input type="tel" pattern="[0-9]{2}[0-9]{4,5}[0-9]{4}" id="telefone1" class="form-control" placeholder="(__)____-____" name="telefone1" value="{{telefone1}}" required maxlength="11">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="telefone2">Telefone 2:</label>
+                        <input type="tel" pattern="[0-9]{2}[0-9]{4,5}[0-9]{4}" id="telefone2" class="form-control" placeholder="(__)____-____" name="telefone2" value="{{telefone2}}" maxlength="11">
+                    </div>
+                </div>
+
+                Informações Residenciais:
+                <hr style="margin:2px; background-color:gray;">
+                <div class="row">
+                    <div class="form-group col-sm-2">
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" size="10" maxlength="9" class="form-control" name="cep" placeholder="ex. 17500500" required>
+                    </div>
+                    
+                    <div class="col-1 align-self-center">
+                        <button type="button" onclick="pesquisa_cep($('#cep').val(),'1')" class="btn btn-secondary w-60 btn-pesqcep" alt="Pesquisar CEP">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                            </svg>
+                        </button>                        
+                    </div>
+                    
+                    <div class="form-group col-md-8">
+                        <label for="logradouro">Endereço:</label>
+                        <input type="text" id="logradouro" class="form-control" placeholder="Endereço" name="endereco" maxlength="255">
+                    </div>
+                    <div class="form-group col-sm-1">
+                        <label for="numero">Número:</label>
+                        <input type="number" id = "numero" class="form-control" placeholder="Número" name="numero" value="{{numero}}" maxlength="5">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="bairro">Bairro:</label>
+                        <input type="text" id="bairro" class="form-control" placeholder="Bairro" name="bairro"maxlength="50">
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="cidade">Cidade:</label>
+                        <input type="text" id="cidade" class="form-control" placeholder="Cidade" name="cidade" maxlength="50">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="uf">UF:</label>
+                        <input type="text" id="UF" class="form-control" placeholder="UF" name="uf" maxlength="2">
+                    </div>
+                </div>
+
+                <p>Observações:</p>
+                <hr style="background-color:gray;">
+                <div class="row">
+                    <div class="form-group col-md">
+                        <textarea class="form-control" id="observacoes"rows="3" name="observacoes" maxlength="255">{{observacoes}}</textarea>
+                        
+                    </div>
+                </div>
+                <hr style="background-color:gray;">
+
+                <div id="animais">
+                    <div class="col-md-1 align-self-center">
+                        <button type="button" onclick="add_animal()" class="btn btn-secondary w-60" alt="Adicionar Animal">Adicionar Animal
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <hr style="background-color:gray;">
+                    <div id="form_animal"><code id="subject"></code>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="form-group col-md">
+                        <input type="submit" value="Cadastrar" class="btn btn-primary w-60" style="float:right;" id="cadastrar_usuario">
+                    </div>    
+                </div>
+            </form>
+        </div>
+        <div class="content" id="pesquisa">
+            <form action="{% url 'exibe_dados' %}" method="POST" id="pesquisa_usuario">{% csrf_token %}
+                <div class="row">
+                    <div class="col-md-10">
+                        <label for="pesquisa_nome">Nome:</label>
+                        <input type="text" id="pesquisa_nome" class="form-control p-1" placeholder="Nome ou parte dele" name="pesquisa_nome" value="{{request.GET.pesquisa_nome}}" autocomplete="off">
+                        <br>
+                    </div>
+                    <div class="col-md">
+                        
+                        <label for="pesquisar">
+                        <input type="submit" name="pesquisar" value="Pesquisar" class="btn btn-secondary btn-pesqusuario"></label>
+                        
+                    </div>
+                </div>     
+            </form>
+           
+            <div id="exibe_usuarios">
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Editar Usuário</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateUser" action="{% url 'att_usuario' %}">{% csrf_token %}
+                                Informações do Usuário:<br>
+                                <hr style="margin:2px; background-color:gray;">
+                                <div class="row">
+                                    <div class="form-group col-md-8">
+                                        <input class="form-control" id="form-id" type="hidden" name="formId"/>
+                                        <label for="nome">Nome:</label>
+                                        <input type="text" class="form-control" placeholder="Nome" id="nome_modal" value="{{nome}}" required maxlength="255">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="cpf">CPF:</label>
+                                        <input type="text" class="form-control" placeholder="___.___.___-__" id="cpf_modal" value="{{cpf}}" required maxlength="11">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="rg">RG:</label>:
+                                        <input type="text" class="form-control" placeholder="__.___.___-_" id="rg_modal" value="{{rg}}" maxlength="9">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-8">
+                                        <label for="email">E-mail:</label>
+                                        <input type="email" class="form-control" placeholder="nome@email.com" id="email_modal" value="{{email}}" maxlength="100">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="telefone1">Telefone:</label>
+                                        <input type="tel" pattern="[0-9]{2}[0-9]{4,5}[0-9]{4}" class="form-control" placeholder="(__)____-____" id="telefone1_modal" value="{{telefone1}}" required maxlength="11">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="telefone2">Telefone 2:</label>
+                                        <input type="tel" pattern="[0-9]{2}[0-9]{4,5}[0-9]{4}" class="form-control" placeholder="(__)____-____" id="telefone2_modal" value="{{telefone2}}" maxlength="11">
+                                    </div>
+                                </div>
+
+                                Informações Residenciais:
+                                <hr style="background-color:gray;">
+                                <div class="row">
+                                    <div class="form-group col-sm-2">
+                                        <label for="cep">CEP:</label>
+                                        <input type="text" size="10" maxlength="9" class="form-control" id="cep_modal" placeholder="ex. 17500500" value={{cep}} required>
+                                    </div>
+                                    
+                                    <div class="col-1 align-self-center">
+                                        <button type="button" onclick="pesquisa_cep($('#cep_modal').val(),'2')" class="btn btn-secondary w-60 btn-pesqcep" alt="Pesquisar CEP">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                                            </svg>
+                                        </button>                        
+                                    </div>
+                                    
+                                    <div class="form-group col-md-8">
+                                        <label for="logradouro">Endereço:</label>
+                                        <input type="text" class="form-control" placeholder="Endereço" id="endereco_modal" maxlength="255">
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <label for="numero">Número:</label>
+                                        <input type="number" class="form-control" placeholder="Número" id="numero_modal" value="{{numero}}" maxlength="5">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="bairro">Bairro:</label>
+                                        <input type="text" class="form-control" placeholder="Bairro" id="bairro_modal"maxlength="50">
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label for="cidade">Cidade:</label>
+                                        <input type="text" class="form-control" placeholder="Cidade" id="cidade_modal" maxlength="50">
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label for="uf">UF:</label>
+                                        <input type="text" class="form-control" placeholder="UF" id="uf_modal" maxlength="2">
+                                    </div>
+                                </div>
+
+                                <p>Observações:</p>
+                                <hr style="background-color:gray;">
+                                <div class="row">
+                                    <div class="form-group col-md">
+                                        <textarea class="form-control" rows="3" id="observacoes_modal" maxlength="255"></textarea>
+                                        
+                                    </div>
+                                </div>
+
+                                <hr style="background-color:gray;">
+                                <div id="animais_modal">
+                                    <div class="col-md-1 align-self-center">
+                                        <button type="button" onclick="add_animal_modal()" class="btn btn-secondary w-60" alt="Adicionar Animal">Adicionar Animal
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="15" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <hr style="background-color:gray;">
+                                </div>
+
+                                <div id="exibe_animais_modal">
+                                    
+                                </div>       
+                                                              
+                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                                </div>
+
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'cadastro/js/cadastro.js' %}"></script>
+<script src="{% static 'sweetAlert/js/sweetalert2.all.min.js' %}"></script>
+
+
+{% endblock %}
+

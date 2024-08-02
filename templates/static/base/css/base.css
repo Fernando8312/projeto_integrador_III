@@ -1,0 +1,36 @@
+#total{
+    width: 75px;
+    height: 70px; 
+    background-color: #008F7A; 
+    border-radius: 10px;
+    text-align: center;
+    font-size: 25px;
+    margin:0 auto;
+    align-content: center;
+    font-weight: bold;
+    color:white;
+    box-shadow: 5px 5px 5px grey;
+    margin: 10px;
+}
+
+.dpd-seleciona{
+    top:25px;
+    right: -5px;
+}
+
+#valores{
+    align-content: center;
+}
+
+.btn-seleciona{
+    background-color: #a4c3d9;
+    border-color: #a4c3d9;
+}
+
+.btn-seleciona.focus{
+    background-color: #a4c3d9;
+}
+
+.btn-seleciona.dropdown-toggle{
+    background-color: #a4c3d9;
+}

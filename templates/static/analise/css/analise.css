@@ -1,0 +1,159 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    
+}
+
+.row{
+    margin-left: 10px;
+}
+
+.col-sm-1 {
+    max-width: 4%;
+    margin-top: -1px;
+}
+
+.col-sm-2 {
+    margin-left: 10px;
+
+}
+
+.form-check-label {
+    margin-top: 5px;
+}
+
+.form-check-input {
+    margin-top: 10px;
+}
+
+#exibicao{
+    display: flex;
+    justify-content: center;
+    position:relative;
+}
+
+#total_cadastros_mes{
+    background-color:#2C73D2;
+    height: 200px;
+    display: inline-block;
+    width: 300px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px grey;
+}
+
+#dados_total_cadastros_mes{
+    justify-content: center;
+    text-align: center; 
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); 
+    font-size:25px; 
+    font-weight:700;
+}
+
+#valor_cadastros_mes{
+    background-color:#008F7A;
+    display: inline-block;
+    height: 200px;
+    width: 300px;
+    margin: 0 auto; 
+    border-radius: 10px; 
+    box-shadow: 10px 5px 5px grey;
+}
+
+#dados_valor_cadastros_mes{
+    justify-content: center;
+    text-align: center; 
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); 
+    font-size:25px;
+    font-weight:700;
+}
+
+#percentual_cadastros_mes{
+    background-color:#FFC75F;
+    display: inline-block;
+    height: 200px;
+    width: 300px;
+    margin: 0 auto; 
+    border-radius: 10px; 
+    box-shadow: 10px 5px 5px grey;    
+}
+
+#dados_percentual_cadastros_mes{
+    justify-content: center;
+    text-align: center; 
+    position: relative;
+    top: 50%;transform: translateY(-50%); 
+    font-size:25px;
+    font-weight:700;
+}
+
+#graficos_animais{
+    position: absolute;
+    top: 250px; 
+    justify-content: center;
+    text-align: center; 
+    width: 900px;
+}
+
+#grafico_bairros{
+    position: absolute;
+    top: 800px; 
+    justify-content: center;
+    text-align: center; 
+    width: 900px;
+}
+
+#grafico_agendamentos{
+    position: absolute;
+    top: 1350px; 
+    justify-content: center;
+    text-align: center; 
+    width: 700px;
+}
+
+#grafico_tempo_medio{
+    position: absolute;
+    top: 2250px;
+    justify-content: center;
+    text-align: center; 
+    width: 500px;
+    background-color:#FFC75F;
+    display: inline-block;
+    height: 300px;
+    width: 450px;
+    margin: 0 auto; 
+    border-radius: 10px; 
+    box-shadow: 10px 5px 5px grey;    
+}
+
+#g_tempo_medio{
+    justify-content: center;
+    text-align: center; 
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%); 
+    font-size:25px; 
+    font-weight:700;
+}
+
+#medio{
+    justify-content: center;
+    text-align: center; 
+    position: relative;
+    top: 20%;
+    transform: translateY(-50%); 
+    font-size:25px; 
+    font-weight:700;
+
+}
